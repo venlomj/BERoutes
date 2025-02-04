@@ -1,4 +1,5 @@
 using BERoutes.API.Data;
+using BERoutes.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,10 @@ builder.Services.AddDbContext<BERoutesDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BERoutesConnection"));
 });
+
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 
