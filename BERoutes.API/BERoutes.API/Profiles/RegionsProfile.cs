@@ -9,7 +9,9 @@ namespace BERoutes.API.Profiles
         public RegionsProfile()
         {
             CreateMap<Region, RegionDto>()
-                .ReverseMap(); 
+                .ReverseMap();
+            CreateMap<AddRegionRequestDto, Region>()
+                .ReverseMap();
         }
     }
 }
