@@ -17,6 +17,7 @@ builder.Services.AddDbContext<BERoutesDbContext>(options =>
 });
 
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+builder.Services.AddScoped<IActivityRouteRepository, ActivityRouteRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

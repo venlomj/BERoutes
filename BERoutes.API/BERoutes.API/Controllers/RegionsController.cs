@@ -48,7 +48,7 @@ namespace BERoutes.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRegion([FromBody] AddRegionRequestDto request)
+        public async Task<IActionResult> AddRegion([FromBody] AddRegionRequest request)
         {
             // Request(DTO) to Domain model
             var region = new Region()
@@ -80,7 +80,7 @@ namespace BERoutes.API.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        public async Task<IActionResult> UpdateRegion(Guid id, UpdateRegionRequestDto request)
+        public async Task<IActionResult> UpdateRegion(Guid id, UpdateRegionRequest request)
         {
             // Convert DTO to Domain model
             var region = new Region()

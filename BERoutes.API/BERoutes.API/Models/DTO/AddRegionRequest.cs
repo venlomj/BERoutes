@@ -1,6 +1,6 @@
 ﻿namespace BERoutes.API.Models.DTO
 {
-    public class AddRegionRequestDto
+    public class AddRegionRequest
     {
         public string Code { get; set; }
         public string Name { get; set; }

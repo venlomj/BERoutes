@@ -4,13 +4,14 @@ using BERoutes.API.Models.DTO;
 
 namespace BERoutes.API.Profiles
 {
-    public class RegionsProfile: Profile
+    public class ActivityRoutesProfile: Profile
     {
-        public RegionsProfile()
+        public ActivityRoutesProfile() 
         {
-            CreateMap<Region, RegionDto>()
+            CreateMap<ActivityRoute, ActivityRouteDto>()
                 .ReverseMap();
-            CreateMap<AddRegionRequest, Region>()
+
+            CreateMap<RouteDifficulty, RouteDifficultyDto>()
                 .ReverseMap();
         }
     }

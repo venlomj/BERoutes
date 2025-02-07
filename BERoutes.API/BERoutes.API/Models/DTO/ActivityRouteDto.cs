@@ -10,10 +10,10 @@ namespace BERoutes.API.Models.DTO
 
 
         public Guid RegionId { get; set; }
-        //public Guid RouteDifficultyId { get; set; }
+        public Guid RouteDifficultyId { get; set; }
 
         // Navigation properties
-        public RouteDifficulty RouteDifficulty { get; set; }
-        //public Region Region { get; set; }
+        public RouteDifficultyDto RouteDifficulty { get; set; }
+        public RegionDto Region { get; set; }
     }
 }
