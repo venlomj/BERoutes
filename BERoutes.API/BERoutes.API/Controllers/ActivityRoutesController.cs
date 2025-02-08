@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BERoutes.API.Models.Domain;
 using BERoutes.API.Models.DTO;
-using BERoutes.API.Repositories;
+using BERoutes.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,7 +43,7 @@ namespace BERoutes.API.Controllers
 
             if (activityRoute == null)
             {
-                return NotFound();
+                return NotFound($"Activity Route with the {id}, not found");
             }
 
             var result = mapper.Map<ActivityRouteDto>(activityRoute);

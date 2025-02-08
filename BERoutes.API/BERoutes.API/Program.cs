@@ -1,5 +1,6 @@
 using BERoutes.API.Data;
-using BERoutes.API.Repositories;
+using BERoutes.API.Repositories.Implementations;
+using BERoutes.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<BERoutesDbContext>(options =>
 
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 builder.Services.AddScoped<IActivityRouteRepository, ActivityRouteRepository>();
+builder.Services.AddScoped<IRouteDifficultyRepository, RouteDifficultyRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

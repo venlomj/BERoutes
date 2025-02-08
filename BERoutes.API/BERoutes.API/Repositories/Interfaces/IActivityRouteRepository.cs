@@ -1,6 +1,6 @@
 ﻿using BERoutes.API.Models.Domain;
 
-namespace BERoutes.API.Repositories
+namespace BERoutes.API.Repositories.Interfaces
 {
     public interface IActivityRouteRepository
     {

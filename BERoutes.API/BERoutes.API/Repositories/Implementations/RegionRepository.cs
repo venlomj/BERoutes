@@ -1,8 +1,9 @@
 ﻿using BERoutes.API.Data;
 using BERoutes.API.Models.Domain;
+using BERoutes.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BERoutes.API.Repositories
+namespace BERoutes.API.Repositories.Implementations
 {
     public class RegionRepository : IRegionRepository
     {
@@ -39,7 +40,7 @@ namespace BERoutes.API.Repositories
             {
                 return null;
             }
-            
+
             existingRegion.Code = region.Code;
             existingRegion.Name = region.Name;
             existingRegion.Area = region.Area;

@@ -1,8 +1,9 @@
 ﻿using BERoutes.API.Data;
 using BERoutes.API.Models.Domain;
+using BERoutes.API.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BERoutes.API.Repositories
+namespace BERoutes.API.Repositories.Implementations
 {
     public class ActivityRouteRepository : IActivityRouteRepository
     {
@@ -18,7 +19,7 @@ namespace BERoutes.API.Repositories
             activityRoute.Id = Guid.NewGuid();
             await context.ActivityRoutes.AddAsync(activityRoute);
             await context.SaveChangesAsync();
-            
+
             return activityRoute;
         }
 
