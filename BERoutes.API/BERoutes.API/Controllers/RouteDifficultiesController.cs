@@ -56,6 +56,12 @@ namespace BERoutes.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRegion([FromBody] AddRouteDifficultyRequest request)
         {
+            // Validate Request
+            if (!ValidateAddRouteDifficulty(request))
+            {
+                return BadRequest(ModelState);
+            }
+
             // Request(DTO) to Domain model
             var routeDifficulty = new RouteDifficulty
             {
@@ -75,6 +81,12 @@ namespace BERoutes.API.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateRouteDifficulty(Guid id, UpdateRouteDifficultyRequest request)
         {
+            // Validate Request
+            if (!ValidateUpdateRouteDifficulty(request))
+            {
+                return BadRequest(ModelState);
+            }
+
             var existingRouteDifficulty = new RouteDifficulty
             {
                 Code = request.Code,
@@ -112,5 +124,54 @@ namespace BERoutes.API.Controllers
 
             return Ok(result);
         }
+
+        #region Private methods
+
+        private bool ValidateAddRouteDifficulty(AddRouteDifficultyRequest request)
+        {
+            if (request == null)
+            {
+                ModelState.AddModelError(nameof(request),
+                    $"{nameof(request)} cannot be empty.");
+
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(request.Code))
+            {
+                ModelState.AddModelError(nameof(request.Code),
+                    $"{nameof(request.Code)} is required.");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private bool ValidateUpdateRouteDifficulty(UpdateRouteDifficultyRequest request)
+        {
+            if (request == null)
+            {
+                ModelState.AddModelError(nameof(request),
+                    $"{nameof(request)} cannot be empty.");
+
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(request.Code))
+            {
+                ModelState.AddModelError(nameof(request.Code),
+                    $"{nameof(request.Code)} is required.");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

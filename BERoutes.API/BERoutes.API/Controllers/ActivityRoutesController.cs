@@ -13,12 +13,18 @@ namespace BERoutes.API.Controllers
     {
         private readonly IActivityRouteRepository activityRouteRepository;
         private readonly IMapper mapper;
+        private readonly IRegionRepository regionRepository;
+        private readonly IRouteDifficultyRepository routeDifficultyRepository;
 
         public ActivityRoutesController(IActivityRouteRepository activityRouteRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IRegionRepository regionRepository,
+            IRouteDifficultyRepository routeDifficultyRepository)
         {
             this.activityRouteRepository = activityRouteRepository;
             this.mapper = mapper;
+            this.regionRepository = regionRepository;
+            this.routeDifficultyRepository = routeDifficultyRepository;
         }
 
         [HttpGet]
@@ -53,6 +59,12 @@ namespace BERoutes.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddActivityRoute([FromBody] AddActivityRouteRequest request)
         {
+            // Validate Request
+            if (!await ValidateAddActivityRoute(request))
+            {
+                return BadRequest(ModelState);
+            }
+
             // Convert DTO to Domain Object
             var activityRoute = new ActivityRoute
             {
@@ -83,6 +95,12 @@ namespace BERoutes.API.Controllers
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateActivityRoute([FromRoute] Guid id, [FromBody] UpdateActivityRouteRequest request)
         {
+            // Validate Request
+            if (!await ValidateUpdateActivityRoute(request))
+            {
+                return BadRequest(ModelState);
+            }
+
             // Convert DTO to Domain object
             var activityRoute = new ActivityRoute
             {
@@ -130,5 +148,92 @@ namespace BERoutes.API.Controllers
 
             return Ok(result);
         }
+
+        #region Private methods
+
+        private async Task<bool> ValidateAddActivityRoute(AddActivityRouteRequest request)
+        {
+            if (request == null)
+            {
+                ModelState.AddModelError(nameof(request),
+                    $"{nameof(request)} cannot be empty.");
+
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(request.Name))
+            {
+                ModelState.AddModelError(nameof(request.Name),
+                    $"{nameof(request.Name)} is required.");
+            }
+            if (request.Length <= 0)
+            {
+                ModelState.AddModelError(nameof(request.Length),
+                    $"{nameof(request.Length)} should be greather than zero.");
+            }
+
+            var region = await regionRepository.GetAsync(request.RegionId);
+            if (region == null) 
+            {
+                ModelState.AddModelError(nameof(request.RegionId),
+                                    $"{nameof(request.RegionId)} is invalid");
+            }
+
+            var routeDifficulty = await routeDifficultyRepository.GetAsync(request.RouteDifficultyId);
+            if (routeDifficulty == null) 
+            {
+                ModelState.AddModelError(nameof(request.RouteDifficultyId),
+                                    $"{nameof(request.RouteDifficultyId)} is invalid");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private async Task<bool> ValidateUpdateActivityRoute(UpdateActivityRouteRequest request)
+        {
+            if (request == null)
+            {
+                ModelState.AddModelError(nameof(request),
+                    $"{nameof(request)} cannot be empty.");
+
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(request.Name))
+            {
+                ModelState.AddModelError(nameof(request.Name),
+                    $"{nameof(request.Name)} is required.");
+            }
+            if (request.Length <= 0)
+            {
+                ModelState.AddModelError(nameof(request.Length),
+                    $"{nameof(request.Length)} should be greather.");
+            }
+
+            var region = await regionRepository.GetAsync(request.RegionId);
+            if (region == null)
+            {
+                ModelState.AddModelError(nameof(request.RegionId),
+                                    $"{nameof(request.RegionId)} is invalid");
+            }
+
+            var routeDifficulty = await routeDifficultyRepository.GetAsync(request.RouteDifficultyId);
+            if (routeDifficulty == null)
+            {
+                ModelState.AddModelError(nameof(request.RouteDifficultyId),
+                                    $"{nameof(request.RouteDifficultyId)} is invalid");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

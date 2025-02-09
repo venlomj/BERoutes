@@ -50,6 +50,12 @@ namespace BERoutes.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRegion([FromBody] AddRegionRequest request)
         {
+            // Validate Request
+            if (!ValidateAddRegion(request))
+            {
+                return BadRequest(ModelState);
+            }
+
             // Request(DTO) to Domain model
             var region = new Region()
             { 
@@ -67,6 +73,7 @@ namespace BERoutes.API.Controllers
             // Convert back to DTO
             var result = new RegionDto
             {
+                Id = region.Id,
                 Code = region.Code,
                 Area = region.Area,
                 Lat = region.Lat,
@@ -80,8 +87,15 @@ namespace BERoutes.API.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
-        public async Task<IActionResult> UpdateRegion(Guid id, UpdateRegionRequest request)
+        public async Task<IActionResult> UpdateRegion(Guid id, 
+            [FromBody] UpdateRegionRequest request)
         {
+            // Validate Request
+            if (!ValidateUpdateRegion(request))
+            {
+                return BadRequest(ModelState);
+            }
+
             // Convert DTO to Domain model
             var region = new Region()
             {
@@ -145,6 +159,87 @@ namespace BERoutes.API.Controllers
             // Return Ok response
             return Ok(result);
         }
+
+        #region Private methods
+
+        private bool ValidateAddRegion(AddRegionRequest request)
+        {
+            if (request == null)
+            {
+                ModelState.AddModelError(nameof(request),
+                    $"Add Region Data is required.");
+
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Code))
+            {
+                ModelState.AddModelError(nameof(request.Code), 
+                    $"{nameof(request.Code)} must cannot be null, empty or white space.");
+            }
+            if (string.IsNullOrWhiteSpace(request.Name))
+            {
+                ModelState.AddModelError(nameof(request.Name), 
+                    $"{nameof(request.Name)} must cannot be null, empty or white space.");
+            }
+            if (request.Area <= 0)
+            {
+                ModelState.AddModelError(nameof(request.Area), 
+                    $"{nameof(request.Area)} must cannot be less than or equal to 0.");
+            }
+            if (request.Population < 0)
+            {
+                ModelState.AddModelError(nameof(request.Long), 
+                    $"{nameof(request.Population)} must cannot be less than 0.");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        private bool ValidateUpdateRegion(UpdateRegionRequest request)
+        {
+            if (request == null)
+            {
+                ModelState.AddModelError(nameof(request),
+                    $"Update Region Data is required.");
+
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Code))
+            {
+                ModelState.AddModelError(nameof(request.Code), 
+                    $"{nameof(request.Code)} must cannot be null, empty or white space.");
+            }
+            if (string.IsNullOrWhiteSpace(request.Name))
+            {
+                ModelState.AddModelError(nameof(request.Name), 
+                    $"{nameof(request.Name)} must cannot be null, empty or white space.");
+            }
+            if (request.Area <= 0)
+            {
+                ModelState.AddModelError(nameof(request.Area), 
+                    $"{nameof(request.Area)} must cannot be less than or equal to 0.");
+            }
+            if (request.Population < 0)
+            {
+                ModelState.AddModelError(nameof(request.Long), 
+                    $"{nameof(request.Population)} must cannot be less than 0.");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
 
     }
 }
