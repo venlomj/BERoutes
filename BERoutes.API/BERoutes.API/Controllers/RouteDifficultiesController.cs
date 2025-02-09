@@ -54,13 +54,13 @@ namespace BERoutes.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddRegion([FromBody] AddRouteDifficultyRequest request)
+        public async Task<IActionResult> AddRouteDifficulty([FromBody] AddRouteDifficultyRequest request)
         {
             // Validate Request
-            if (!ValidateAddRouteDifficulty(request))
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ValidateAddRouteDifficulty(request))
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             // Request(DTO) to Domain model
             var routeDifficulty = new RouteDifficulty
@@ -82,10 +82,10 @@ namespace BERoutes.API.Controllers
         public async Task<IActionResult> UpdateRouteDifficulty(Guid id, UpdateRouteDifficultyRequest request)
         {
             // Validate Request
-            if (!ValidateUpdateRouteDifficulty(request))
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ValidateUpdateRouteDifficulty(request))
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             var existingRouteDifficulty = new RouteDifficulty
             {

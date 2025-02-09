@@ -51,10 +51,10 @@ namespace BERoutes.API.Controllers
         public async Task<IActionResult> AddRegion([FromBody] AddRegionRequest request)
         {
             // Validate Request
-            if (!ValidateAddRegion(request))
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ValidateAddRegion(request))
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             // Request(DTO) to Domain model
             var region = new Region()
@@ -91,10 +91,10 @@ namespace BERoutes.API.Controllers
             [FromBody] UpdateRegionRequest request)
         {
             // Validate Request
-            if (!ValidateUpdateRegion(request))
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ValidateUpdateRegion(request))
+            //{
+            //    return BadRequest(ModelState);
+            //}
 
             // Convert DTO to Domain model
             var region = new Region()

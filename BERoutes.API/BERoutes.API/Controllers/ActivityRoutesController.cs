@@ -153,23 +153,23 @@ namespace BERoutes.API.Controllers
 
         private async Task<bool> ValidateAddActivityRoute(AddActivityRouteRequest request)
         {
-            if (request == null)
-            {
-                ModelState.AddModelError(nameof(request),
-                    $"{nameof(request)} cannot be empty.");
+            //if (request == null)
+            //{
+            //    ModelState.AddModelError(nameof(request),
+            //        $"{nameof(request)} cannot be empty.");
 
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(request.Name))
-            {
-                ModelState.AddModelError(nameof(request.Name),
-                    $"{nameof(request.Name)} is required.");
-            }
-            if (request.Length <= 0)
-            {
-                ModelState.AddModelError(nameof(request.Length),
-                    $"{nameof(request.Length)} should be greather than zero.");
-            }
+            //    return false;
+            //}
+            //if (string.IsNullOrWhiteSpace(request.Name))
+            //{
+            //    ModelState.AddModelError(nameof(request.Name),
+            //        $"{nameof(request.Name)} is required.");
+            //}
+            //if (request.Length <= 0)
+            //{
+            //    ModelState.AddModelError(nameof(request.Length),
+            //        $"{nameof(request.Length)} should be greather than zero.");
+            //}
 
             var region = await regionRepository.GetAsync(request.RegionId);
             if (region == null) 
@@ -194,23 +194,23 @@ namespace BERoutes.API.Controllers
         }
         private async Task<bool> ValidateUpdateActivityRoute(UpdateActivityRouteRequest request)
         {
-            if (request == null)
-            {
-                ModelState.AddModelError(nameof(request),
-                    $"{nameof(request)} cannot be empty.");
+            //if (request == null)
+            //{
+            //    ModelState.AddModelError(nameof(request),
+            //        $"{nameof(request)} cannot be empty.");
 
-                return false;
-            }
-            if (string.IsNullOrWhiteSpace(request.Name))
-            {
-                ModelState.AddModelError(nameof(request.Name),
-                    $"{nameof(request.Name)} is required.");
-            }
-            if (request.Length <= 0)
-            {
-                ModelState.AddModelError(nameof(request.Length),
-                    $"{nameof(request.Length)} should be greather.");
-            }
+            //    return false;
+            //}
+            //if (string.IsNullOrWhiteSpace(request.Name))
+            //{
+            //    ModelState.AddModelError(nameof(request.Name),
+            //        $"{nameof(request.Name)} is required.");
+            //}
+            //if (request.Length <= 0)
+            //{
+            //    ModelState.AddModelError(nameof(request.Length),
+            //        $"{nameof(request.Length)} should be greather.");
+            //}
 
             var region = await regionRepository.GetAsync(request.RegionId);
             if (region == null)

@@ -1,6 +1,8 @@
 using BERoutes.API.Data;
 using BERoutes.API.Repositories.Implementations;
 using BERoutes.API.Repositories.Interfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//builder.Services.
+//    AddFluentValidation(option => option.RegisterValidatorsFromAssemblyContaining<Program>());
+
+builder.Services
+    .AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters()
+    .AddValidatorsFromAssemblyContaining<Program>();
+
 
 builder.Services.AddDbContext<BERoutesDbContext>(options =>
 {
