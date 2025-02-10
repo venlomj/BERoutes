@@ -2,6 +2,7 @@
 using BERoutes.API.Models.Domain;
 using BERoutes.API.Models.DTO;
 using BERoutes.API.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,7 @@ namespace BERoutes.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "reader, admin")]
         public async Task<IActionResult> GetAllActivityRoutes()
         {
             // Fatch data from the database
@@ -43,6 +45,7 @@ namespace BERoutes.API.Controllers
         [HttpGet]
         [Route("{id:guid}")]
         [ActionName("GetActivityRoute")]
+        [Authorize(Roles = "reader, admin")]
         public async Task<IActionResult> GetActivityRoute(Guid id)
         {
             var activityRoute = await activityRouteRepository.GetAsync(id);
@@ -57,6 +60,7 @@ namespace BERoutes.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddActivityRoute([FromBody] AddActivityRouteRequest request)
         {
             // Validate Request
@@ -93,6 +97,7 @@ namespace BERoutes.API.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateActivityRoute([FromRoute] Guid id, [FromBody] UpdateActivityRouteRequest request)
         {
             // Validate Request
@@ -134,6 +139,7 @@ namespace BERoutes.API.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteActivityRoute([FromRoute] Guid id)
         {
             // Call Repository to delete ActivityRoute

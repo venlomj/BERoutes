@@ -3,6 +3,7 @@ using BERoutes.API.Models.Domain;
 using BERoutes.API.Models.DTO;
 using BERoutes.API.Repositories.Implementations;
 using BERoutes.API.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ namespace BERoutes.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "reader, admin")]
         public async Task<IActionResult> GetRouteDifficulties()
         {
             // Fatch data from the database
@@ -38,6 +40,7 @@ namespace BERoutes.API.Controllers
         [HttpGet]
         [Route("{id:guid}")]
         [ActionName("GetRouteDifficulty")]
+        [Authorize(Roles = "reader, admin")]
         public async Task<IActionResult> GetRouteDifficulty(Guid id)
         {
             var routeDifficulty = await routeDifficultyRepository.GetAsync(id);
@@ -54,6 +57,7 @@ namespace BERoutes.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> AddRouteDifficulty([FromBody] AddRouteDifficultyRequest request)
         {
             // Validate Request
@@ -79,6 +83,7 @@ namespace BERoutes.API.Controllers
 
         [HttpPut]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> UpdateRouteDifficulty(Guid id, UpdateRouteDifficultyRequest request)
         {
             // Validate Request
@@ -110,6 +115,7 @@ namespace BERoutes.API.Controllers
 
         [HttpDelete]
         [Route("{id:guid}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteRouteDifficulty([FromRoute] Guid id)
         {
             // Call Repository to delete RouteDifficulty
